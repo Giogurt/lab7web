@@ -37,3 +37,7 @@
     background-color: #ff7b00f7 !important;
     color: #ffffff !important;
   }
+
+  .containerGrid {
+    padding-top: 2rem;
+  }

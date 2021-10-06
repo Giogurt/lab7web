@@ -19,13 +19,21 @@ interface ProductInfoProps {
  * @returns ProductInfo UI elements
  */
 const ProductInfo: React.FC<ProductInfoProps> = (props) => {
-  var listPrice = 0.00;
-  if (props.product !== undefined && props.product.childSkus !== undefined && props.product.childSkus[0] !== undefined) {
+  var listPrice = 0.0;
+  if (
+    props.product !== undefined &&
+    props.product.childSkus !== undefined &&
+    props.product.childSkus[0] !== undefined
+  ) {
     listPrice = props.product.childSkus[0].listPrice;
   }
 
-  var salePrice = 0.00;
-  if (props.product !== undefined && props.product.childSkus !== undefined && props.product.childSkus[0] !== undefined) {
+  var salePrice = 0.0;
+  if (
+    props.product !== undefined &&
+    props.product.childSkus !== undefined &&
+    props.product.childSkus[0] !== undefined
+  ) {
     salePrice = props.product.childSkus[0].salePrice;
   }
 
@@ -54,7 +62,28 @@ const ProductInfo: React.FC<ProductInfoProps> = (props) => {
   ) {
     largeImageUrl = props.product.childSkus[0].largeImageUrl;
   } else {
-    largeImageUrl = "https://dummyimage.com/500x500/000/0011ff"
+    largeImageUrl = "https://dummyimage.com/500x500/000/0011ff";
+  }
+
+  let comments: any[] = [];
+  if (props.product !== undefined && props.product.comments !== undefined) {
+    props.product.comments.forEach((comment) => {
+      comments.push(
+        <Grid item container>
+          <Grid item lg={12}>
+            <Typography variant="h6">{comment.author}</Typography>
+          </Grid>
+          <Grid item lg={12}>
+            <Typography variant="body1">{comment.body}</Typography>
+            <Grid item lg={12}>
+              <Typography variant="body1">
+                date posted: {comment.created}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+      );
+    });
   }
 
   return (
@@ -62,10 +91,7 @@ const ProductInfo: React.FC<ProductInfoProps> = (props) => {
       <Grid container className="productGrid" spacing={2}>
         <Grid item lg={4}>
           <Paper className="largeImage">
-            <img
-              src={largeImageUrl}
-              alt={props.product.name}
-            />
+            <img src={largeImageUrl} alt={props.product.name} />
           </Paper>
         </Grid>
 
@@ -76,9 +102,7 @@ const ProductInfo: React.FC<ProductInfoProps> = (props) => {
             </Typography>
           </Grid>
           <Grid item lg={12}>
-            <Typography>
-              {props.product.description}
-            </Typography>
+            <Typography>{props.product.description}</Typography>
           </Grid>
           <Grid item lg={2}>
             <Typography className="dollars crossedout">{listPrice}</Typography>
@@ -91,7 +115,12 @@ const ProductInfo: React.FC<ProductInfoProps> = (props) => {
             <InputLabel className="productLabel" id="color-label">
               Color
             </InputLabel>
-            <Select labelId="color-label" id="color-select" label="Color" value={selectedColor}>
+            <Select
+              labelId="color-label"
+              id="color-select"
+              label="Color"
+              value={selectedColor}
+            >
               {colors}
             </Select>
           </Grid>
@@ -99,7 +128,12 @@ const ProductInfo: React.FC<ProductInfoProps> = (props) => {
             <InputLabel className="productLabel" id="size-label">
               Size
             </InputLabel>
-            <Select labelId="size-label" id="size-select" label="Size" value={selectedSize}>
+            <Select
+              labelId="size-label"
+              id="size-select"
+              label="Size"
+              value={selectedSize}
+            >
               {sizes}
             </Select>
           </Grid>
@@ -108,7 +142,12 @@ const ProductInfo: React.FC<ProductInfoProps> = (props) => {
             <InputLabel className="productLabel" id="quantity-label">
               Quantity
             </InputLabel>
-            <Select labelId="quantity-label" id="quantity-select" label="Quantity" value={1}>
+            <Select
+              labelId="quantity-label"
+              id="quantity-select"
+              label="Quantity"
+              value={1}
+            >
               <MenuItem value="1">1</MenuItem>
               <MenuItem value="2">2</MenuItem>
               <MenuItem value="3">3</MenuItem>
@@ -123,7 +162,12 @@ const ProductInfo: React.FC<ProductInfoProps> = (props) => {
               Add to Cart
             </Button>
           </Grid>
-
+          <Grid item lg={12} container className="containerGrid" spacing={1}>
+            <Grid item lg={12}>
+              <Typography variant="h5">Comments:</Typography>
+            </Grid>
+            {comments}
+          </Grid>
           <Grid item lg={12} />
         </Grid>
       </Grid>
